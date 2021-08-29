@@ -214,6 +214,7 @@ add_attribute( Identity, Attribute_Key, Attribute_Value ) <br>
 remove_attribute( Identity, Attribute_Key )
 
 # Implementing Pallet
+[Link to code](https://github.com/prasad-kumkar/pallet-identity/blob/master/src/lib.rs)
 
 ## Storage
 For this we have create `Identity` mapping from Identity to AccountId. `Identity` here would be a string transformed into a vector of size u8.
@@ -346,6 +347,7 @@ pub fn remove_attribute(
 ```
 
 # Writing Test Cases
+[Link to code](https://github.com/prasad-kumkar/pallet-identity/blob/master/src/tests.rs)
 We have implemented two test case 
 
 1.
