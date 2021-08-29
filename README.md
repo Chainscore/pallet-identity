@@ -1,11 +1,12 @@
 # How to build Custom Pallets with Substrate
 
 # Introduction
-In this tutorial, we will be building a custom pallet using the substrate development framework and FRAME v1. Pallet
+In this tutorial, we will be building a custom pallet using the substrate development framework and FRAME v1. We shall start with understanding pallets, FRAME framework. Then we will take a look at the substrate pallet temmplate and use that to build our own custom pallet, write test cases, publish using git and add the published pallet to our runtime.
 
 ## Pre-requisite
 Familiarity with Rust Programming Language
-Knowledge of Substate Framework
+
+Basic Knowledge of Substate Framework
 
 ## Pallets
 Pallets are domain-specific runtime modules, which allows us to have a modular design. We could add multiple pallets to our runtime.
