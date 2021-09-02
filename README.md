@@ -1,17 +1,14 @@
 # How to build Custom Pallets with Substrate
-
 # Introduction
-In this tutorial, we will be building a custom pallet using the substrate development framework and FRAME v1. We shall start with understanding pallets, FRAME framework. Then we will take a look at the substrate pallet temmplate and use that to build our own custom pallet, write test cases, publish using git and add the published pallet to our runtime.
+In this tutorial, we will be building a custom pallet using the Substrate development framework and FRAME v1. We will start with an overview to understand pallets and the FRAME framework. We will then take a look at the Substrate pallet template, using it to build our custom pallet, write test cases, publish using git and finally add the published pallet to our runtime.
 
-## Pre-requisite
-Familiarity with Rust Programming Language
+# Pre-requisite
+This tutorial assumes the reader is somewhat familiar with the Rust programming language and has a basic understanding of the Substrate framework.
 
-Basic Knowledge of Substate Framework
+# Pallets
+Pallets are domain-specific runtime modules, which allow us to have a modular design. We can add multiple pallets to our runtime.
 
-## Pallets
-Pallets are domain-specific runtime modules, which allows us to have a modular design. We could add multiple pallets to our runtime.
-
-Some of the most popular pre-build pallets could be found [here.](https://substrate.dev/docs/en/knowledgebase/runtime/frame#prebuilt-pallets)
+For reference, some of the most popular prebuilt pallets can be found [on the Substrate developer site](https://substrate.dev/docs/en/knowledgebase/runtime/frame#prebuilt-pallets).
 
 ## FRAME v1
 FRAME is the framework to develop pallets, it comes with set of libraries and modules to get started. Following is the skeleton of a FRAME based pallet:
@@ -23,28 +20,29 @@ use support::{decl_module, decl_event, decl_storage, ...}
 ```
 2. Runtime Config Trait
 
-All of the runtime types and consts go in here. If the pallet is dependent on specific other pallets, then their configuration traits should be added to the inherited traits list.
+All of the runtime types and consts will go in here. If the pallet is dependent on other pallets, then their configuration traits should be added to the inherited traits list.
 ```rust
 pub trait Config: frame_system::Config { ... }
 ```
 3. Runtime Events
 
-Events are a simple means of reporting specific conditions and circumstances that have happened that users, Dapps and/or chain explorers would find interesting and otherwise difficult to detect.<br>
-[Read more about Runtime Events](https://substrate.dev/docs/en/knowledgebase/runtime/events)
+Events are a simple means of reporting specific events that have happened which users, dApps and/or block explorers would find interesting and otherwise would be difficult to detect.
+
+Read more about [Runtime Events](https://substrate.dev/docs/en/knowledgebase/runtime/events)
 ```rust
 decl_event! { ... }
 ```
 4. Runtime Storage 
 
 This allows for type-safe usage of the Substrate storage database, so you can keep things around between blocks.
-<br>
-[Read more about Runtime Storage](https://substrate.dev/docs/en/knowledgebase/runtime/storage)
+
+Read more about [Runtime Storage](https://substrate.dev/docs/en/knowledgebase/runtime/storage)
 ```rust
 decl_storage! { ... }
 ```
 5. Runtime Errors
 
-This is a enum allows to define custom error types which could be called from the runtime module.
+This is an enum that allows us to define custom error types which could be called from the runtime module.
 ```rust
 decl_error! { ... }
 ```
@@ -54,28 +52,27 @@ This defines the `Module` struct that is ultimately exported from this pallet. I
 ```rust
 decl_module! { ... }
 ```
-We will now take a look at how can build our own pallet with this above framework.
+We will now take a look at how to build our pallet within this framework.
 
 [More details about FRAME](​​https://substrate.dev/docs/en/knowledgebase/runtime/frame)
 
-# Getting Started
-## Using the Template Pallet
-We can start off using the Substrate pallet template, which provides provides the starter code using Frame v1
+# Using the Template Pallet
+We can start off using the Substrate pallet template, which provides the starter code using Frame v1
 
-[Link to Substrate Pallet Template](https://github.com/substrate-developer-hub/substrate-pallet-template)
+Check out the [Substrate Pallet Template](https://github.com/substrate-developer-hub/substrate-pallet-template)
 
-![](resources/1.png)
+![](https://raw.githubusercontent.com/prasad-kumkar/pallet-identity/master/resources/1.png)
 
 
-![](resources/2.png)
+![](https://raw.githubusercontent.com/prasad-kumkar/pallet-identity/master/resources/2.png)
 
-Now you can clone the generated repository onto your local machine by running the following command in your terminal/command-line
-```bash
+Now you can clone the generated repository onto your local machine by running the following command in your terminal:
+```text
 git clone https://github.com/<YOUR_GITHUB_USERNAME>/pallet-identity.git
 ```
-![](resources/3.png)
+![](https://raw.githubusercontent.com/prasad-kumkar/pallet-identity/master/resources/3.png)
 
-## A look at template code
+## Understanding the template code
 First we are importing the rust macros from frame_support library, which are required to build our runtime module `decl_module`, storage `decl_storage`, events `decl_event`, errors `decl_error`, `dispatch` for DispatchResult and `Get` trait is used by storage to convert types.
 
 We have also been importing `ensure_signed` from `frame_system` to check if transactions are signed.
@@ -91,7 +88,7 @@ mod mock;
 #[cfg(test)]
 mod tests;
 ```
-### Configuration
+## Configuration
 ```rust
 pub trait Config: frame_system::Config {
 	/// Because this pallet emits events, it depends on the runtime's definition of an event.
@@ -99,7 +96,7 @@ pub trait Config: frame_system::Config {
 }
 
 ```
-### Declaring Storage
+## Declaring Storage
 
 Here the pallet's storage name `TemplateModule` should be different from other pallets' storage name. 
 
@@ -134,12 +131,10 @@ decl_error! {
 	}
 }
 ```
-### Runtime Module
-This is where we declare method calls (transactions) which could be used to modify/query chain state, they could also emit events and errors.
+## Runtime Module
+This is where we declare method calls (transactions) which could be used to modify/query chain state, they could also emit events and errors. For each dispatchable function, Weight must be mentioned and it must return a `DispatchResult`
 
-`Dispatchable functions allows users to interact with the pallet and invoke state changes. These functions materialize as "extrinsics", which are often compared to transactions. Dispatchable functions must be annotated with a weight and must return a DispatchResult.`
 
-Defining weight lets us define how much gas should the function call cost.
 ```rust
 decl_module! {
 	pub struct Module<T: Config> for enum Call where origin: T::Origin {
@@ -428,15 +423,15 @@ fn check_for_errors() {
 
 ## Building and Testing
 ### Build
-```bash
+```text
 cargo build --release
 ```
 ### Test
-```bash
+```text
 cargo test
 ```
 
-![](./resources/4.png)
+![](https://raw.githubusercontent.com/prasad-kumkar/pallet-identity/master/resources/4.png)
 
 ## Releasing the pallet
 Before we release, we need to update the pallet details. Here you would need to update the pallet name to `pallet-identity` and repository
@@ -461,13 +456,13 @@ git push origin master
 ## Adding to Runtime
 To add this pallet to your runtime, simply include the following to your runtime's `Cargo.toml` file:
 
-```TOML
+```toml
 [dependencies.pallet-identity]
 default_features = false
 git = 'https://github.com/prasad-kumkar/pallet-identity.git'
 ```
 
-and update your runtime's `std` feature to include this pallet:
+Also update your runtime's std feature to include this pallet:
 
 ```TOML
 std = [
@@ -476,7 +471,7 @@ std = [
 ]
 ```
 
-### Runtime `lib.rs`
+## Runtime `lib.rs`
 
 You should implement it's trait like so:
 
@@ -487,11 +482,21 @@ impl pallet_identity::Config for Runtime {
 }
 ```
 
-and include it in your `construct_runtime!` macro:
+Also include it in your `construct_runtime!` macro:
+
 
 ```rust
 IdentityPallet: pallet_identity::{Module, Call, Storage, Event<T>},
 ```
+
+# Conclusion
+To sum up our learning, we have understood FRAME by reviewing the substrate pallet template. Then we went ahead to build our custom pallet (identity pallet) and we saw how to design, implement, test the pallet. We then looked at publishing the pallet and implementing that in our substrate runtime. I hope this would be helpful towards building any custom pallet.
+
+# About the Author
+[Prasad Kumkar](https://github.com/prasad-kumkar) is a blockchain engineer with over 2 years of experience, co-founder of [chainvote.co](https://chainvote.co) (a decentralized corporate governance protocol) 
+
+Email - prasad@chainvote.co
+
 # References
 [Substrate KnowledgeBase](https://substrate.dev/docs/en/knowledgebase)
 
