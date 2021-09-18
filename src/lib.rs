@@ -1,6 +1,7 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 use frame_support::{decl_module, decl_storage, decl_event, decl_error, dispatch, traits::Get};
+use frame_support::inherent::Vec;
 use frame_system::ensure_signed;
 #[cfg(test)]
 mod mock;
